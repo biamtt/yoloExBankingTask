@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.exbanking.yolo.test";
+option java_outer_classname = "ExBankingServiceClass";
+
+package com.exbanking.yolo.test;
+
+message UserDetails{
+  string name = 1;
+  string personal_id = 2;
+  string email = 3;
+  string password = 4;
+}
+
+message CreateUserRequest{
+  UserDetails userDetails = 1;
+}
+
+enum ResponseStatus{
+  OK = 0;
+  ERROR = 1;
+}
+
+message CreateUserResponse{
+  AccountDetails accountDetails = 1;
+  ResponseStatus status = 2;
+}
+
+message AccountDetails{
+  int32 account_id = 1;
+  int32 balance = 2;
+}
+
+message WithdrawRequest{
+  int32 account_id = 1;
+  int32 amount = 2;
+}
+
+message WithdrawResponse{
+  AccountDetails accountDetails = 1;
+}
+
+message SendRequest{
+  int32 from_account_id = 1;
+  int32 to_account_id = 2;
+  int32 amount = 3;
+  string password = 4;
+}
+
+message SendResponse{
+  AccountDetails accountDetails = 1;
+}
+
+message DepositRequest{
+  int32 account_id = 1;
+  int32 amount = 2;
+}
+
+message DepositResponse{
+  AccountDetails accountDetails = 1;
+}
+
+message GetBalanceRequest{
+  int32 account_id = 1;
+}
+
+message GetBalanceResponse{
+  AccountDetails accountDetails = 1;
+}
+
+service ExBankingService{
+  rpc createUserService(CreateUserRequest) returns (CreateUserResponse);
+  rpc withdrawService(WithdrawRequest) returns (WithdrawResponse);
+  rpc sendService(SendRequest) returns (SendResponse);
+  rpc depositService(DepositRequest) returns (DepositResponse);
+  rpc getBalanceService(GetBalanceRequest) returns (GetBalanceResponse);
+}
